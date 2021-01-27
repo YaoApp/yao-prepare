@@ -1,0 +1,102 @@
+{
+  "name": "成员",
+  "dsn": "default",
+  "engine": {
+    "storage": "MySQL",
+    "query": "ElasticSearch"
+  },
+  "fields": [
+    {
+      "comment": "成员ID",
+      "name": "id_user",
+      "type": "string",
+      "args": 128,
+      "example": "48C01B7E738D4ECFAEAFA67989D29FB5",
+      "nullable": false,
+      "generate": "UUID",
+      "extra": {
+        "title": "成员ID",
+        "description": "成员ID,由系统自动生成,32位大写字母+数字",
+        "type": "string",
+        "pattern": "^[0-9A-Z]{32}$"
+      }
+    },
+    {
+      "comment": "昵称",
+      "name": "nickname",
+      "type": "string",
+      "args": 128,
+      "example": "张三",
+      "nullable": true,
+      "extra": {
+        "title": "昵称",
+        "description": "昵称,微信昵称",
+        "type": "string"
+      }
+    },
+    {
+      "comment": "性别",
+      "name": "gender",
+      "type": "string",
+      "args": 2,
+      "example": "F",
+      "nullable": false,
+      "default": "N",
+      "extra": {
+        "title": "性别",
+        "description": "性别, F 女性, M 男性, N 未知",
+        "type": "string"
+      }
+    },
+    {
+      "comment": "手机号码",
+      "name": "mobile",
+      "type": "string",
+      "args": 40,
+      "example": "8613219381177",
+      "nullable": false,
+      "encoder": "AES-256",
+      "decoder": "AES-256",
+      "extra": {
+        "title": "手机号码",
+        "description": "手机号码,全球手机号",
+        "type": "string",
+        "pattern": "^[1356789]{1}[0-9]{7,13}$"
+      }
+    },
+    {
+      "comment": "微信UnionID",
+      "name": "unionid",
+      "type": "string",
+      "nullable": true,
+      "args": 128,
+      "example": "o6_bmasdasdsad6_2sgVt7hMZOPfL",
+      "extra": {
+        "title": "微信UnionID",
+        "description": "微信UnionID",
+        "type": "string"
+      }
+    },
+    {
+      "comment": "登录密码",
+      "name": "password",
+      "type": "string",
+      "args": 40,
+      "example": "Mmak3103918+",
+      "nullable": true,
+      "encoder": "PASSWORD-HASH",
+      "extra": {
+        "title": "登录密码",
+        "description": "登录密码,必须包含大小写字母,数字和符号, 至少8位。",
+        "type": "string",
+        "pattern": "^[A-Z0-9a-z]{8}$"
+      }
+    }
+  ],
+  "search": [
+    { "field": "id_user", "type": "primary" },
+    { "field": "mobile", "type": "unique" },
+    { "field": "unionid", "type": "unique" },
+    { "field": "password", "type": "index" }
+  ]
+}
