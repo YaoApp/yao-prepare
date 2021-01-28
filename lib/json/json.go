@@ -33,7 +33,7 @@ func Encode(v interface{}) string {
 func EncodeBytes(v interface{}) []byte {
 	jsonbytes, err := jsoniter.Marshal(v)
 	if err != nil {
-		exception.Error(err, 500).
+		exception.Err(err, 500).
 			Ctx(M{"v": v}).
 			Throw()
 	}
@@ -51,7 +51,7 @@ func DecodeFile(file string, v interface{}) {
 
 	jsonbytes, err := ioutil.ReadFile(file)
 	if err != nil {
-		exception.Error(err, 500).
+		exception.Err(err, 500).
 			Ctx(M{"filepath": file}).
 			Throw()
 	}
@@ -63,7 +63,7 @@ func SaveFile(v interface{}, file string) {
 	jsonbytes := EncodeBytes(v)
 	err := ioutil.WriteFile(file, jsonbytes, 0644)
 	if err != nil {
-		exception.Error(err, 500).
+		exception.Err(err, 500).
 			Ctx(M{"filepath": file}).
 			Throw()
 	}

@@ -1,9 +1,11 @@
 package model
 
 import (
-	"path"
 	"strings"
 
+	"github.com/yaoapp/yao/lib/exception"
+
+	"github.com/gobuffalo/packr"
 	"github.com/yaoapp/yao/lib/json"
 	"github.com/yaoapp/yao/lib/model/driver"
 )
@@ -68,8 +70,15 @@ func loadOptionFromCache(name string) *Option {
 // loadOptionFromFile load a model option from the file
 func loadOptionFromFile(name string) *Option {
 	option := &Option{}
-	filename := path.Join("/Users/max/Code/yao/yao/models", strings.ToLower(name)+".json")
-	json.DecodeFile(filename, option)
+	filename := strings.ToLower(name) + ".json"
+	box := packr.NewBox("../../models")
+	content, err := box.FindString(filename)
+	if err != nil {
+		exception.Err(err, 500).
+			Ctx(json.M{"filename": filename}).
+			Throw()
+	}
+	json.Decode(content, option)
 	return option
 }
 

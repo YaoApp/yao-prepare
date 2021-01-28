@@ -22,8 +22,8 @@ func New(message string, code int) *Exception {
 	}
 }
 
-// Error Create an exception instance from the error
-func Error(err error, code int) *Exception {
+// Err Create an exception instance from the error
+func Err(err error, code int) *Exception {
 	return &Exception{
 		Message: err.Error(),
 		Code:    code,
