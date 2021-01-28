@@ -1,13 +1,18 @@
 package driver
 
+import (
+	"fmt"
+)
+
 // MySQL MySQL driver
 type MySQL struct {
-	DSN string
+	DSN    string
+	Option *Option
 }
 
 // Query query by params
 func (m *MySQL) Query() {
-	println(m.DSN + " Query")
+	fmt.Printf("%#v\n", m.Option)
 }
 
 // Create Create
