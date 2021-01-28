@@ -73,7 +73,7 @@ func LoadOption(name string, methods []string) *driver.Option {
 // loadOptionFromCode load a model option from /models folder .
 func loadOptionFromCode(name string) *driver.Option {
 	option := &driver.Option{}
-	filename := strings.ToLower(name) + ".json"
+	filename := strings.ToLower(name) + "/model.json"
 	box := packr.NewBox("../../models")
 	content, err := box.FindString(filename)
 	if err != nil {

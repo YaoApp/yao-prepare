@@ -10,9 +10,14 @@ type MySQL struct {
 	Option *Option
 }
 
+// GetOption Get the model option
+func (m *MySQL) GetOption() *Option {
+	return m.Option
+}
+
 // Query query by params
 func (m *MySQL) Query() {
-	fmt.Printf("%#v\n", m.Option)
+	fmt.Printf("%#v\n", m.Option.Engine)
 }
 
 // Create Create

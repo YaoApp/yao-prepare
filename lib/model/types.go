@@ -1,7 +1,10 @@
 package model
 
+import "github.com/yaoapp/yao/lib/model/driver"
+
 // Model the model query methods
 type Model interface {
+	GetOption() *driver.Option
 	Query()
 	Create()
 	Upsert()
