@@ -28,3 +28,8 @@ func TestUseSetting(t *testing.T) {
 	conns := UseSetting(primary, Secondary)
 	conns.Select()
 }
+
+func TestUseDefault(t *testing.T) {
+	conns := UseDefault()
+	conns.Select()
+}

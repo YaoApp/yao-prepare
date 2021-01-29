@@ -8,7 +8,18 @@ import (
 	"github.com/yaoapp/yao/lib/json"
 )
 
-// Use Get or create connections from config
+// UseDefault Get or create the default connections
+func UseDefault() *Pool {
+	name, has := config.Setting.Default["database"]
+	if !has {
+		exception.New("the default database config does not set!", 404).
+			Ctx(json.M{"Default": config.Setting.Default}).
+			Throw()
+	}
+	return Use(name)
+}
+
+// Use Get or create connections from the config
 func Use(name string) *Pool {
 	settings, has := config.Setting.Database[name]
 	if !has {
