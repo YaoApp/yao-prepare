@@ -17,6 +17,8 @@ type Field struct {
 		Type        string `json:"type,omitempty"`
 		Pattern     string `json:"pattern,omitempty"`
 	} `json:"extra,omitempty"`
+	Field string `json:"field,omitempty"`
+	From  string `json:"from,omitempty"`
 }
 
 // SearchOption the search option struct
@@ -29,7 +31,6 @@ type SearchOption struct {
 // Option the model option
 type Option struct {
 	Name   string `json:"name"`
-	DSN    string `json:"dsn,omitempty"`
 	Engine struct {
 		Storage string `json:"storage,omitempty"`
 		Query   string `json:"query,omitempty"`

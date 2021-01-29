@@ -1,0 +1,41 @@
+{
+  "STRUCT": {
+    "Error": [
+      { "name": "code", "comment": "错误码", "type": "string" },
+      { "name": "message", "comment": "错误描述", "type": "string" }
+    ],
+    "User": [
+      {
+        "comment": "手机号码",
+        "name": "mobile",
+        "type": "string",
+        "args": 40,
+        "example": "8613219381177",
+        "nullable": false,
+        "encoder": "AES-256",
+        "decoder": "AES-256",
+        "extra": {
+          "title": "手机号码",
+          "description": "手机号码,全球手机号",
+          "type": "string",
+          "pattern": "^[1356789]{1}[0-9]{7,13}$"
+        }
+      },
+      { "name": "openid", "comment": "微信开放平台openid", "type": "string" },
+      {
+        "comment": "微信UnionID",
+        "name": "unionid",
+        "type": "string",
+        "nullable": true,
+        "args": 128,
+        "example": "o6_bmasdasdsad6_2sgVt7hMZOPfL",
+        "extra": {
+          "title": "微信UnionID",
+          "description": "微信UnionID",
+          "type": "string"
+        }
+      },
+      { "name": "nickname", "comment": "微信昵称", "type": "string" }
+    ]
+  }
+}
