@@ -10,6 +10,6 @@ type Database struct {
 
 // Config Yao framework config
 type Config struct {
-	Default  map[string]string `json:"default"`
-	Database []Database        `json:"database"`
+	Default  map[string]string     `json:"default"`
+	Database map[string][]Database `json:"database"`
 }

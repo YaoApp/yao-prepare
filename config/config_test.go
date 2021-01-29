@@ -7,5 +7,5 @@ import (
 
 func TestSetting(t *testing.T) {
 	Setting = Load("config.json", PWD())
-	fmt.Printf("%#v\n", Setting)
+	fmt.Printf("%#v\n", Setting.Database["main"][0])
 }
