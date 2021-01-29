@@ -7,10 +7,17 @@ import (
 	"github.com/yaoapp/yao/config"
 )
 
-func TestUse(t *testing.T) {
+func init() {
 	config.Setting = config.Load("config.json", path.Join(config.PWD(), "/../../config"))
-	name := config.Setting.Default["database"]
-	conns := Use(name)
+}
+
+func TestUseDefault(t *testing.T) {
+	conns := UseDefault()
+	conns.Select()
+}
+
+func TestUse(t *testing.T) {
+	conns := Use("main")
 	conns.Select()
 }
 
@@ -26,10 +33,5 @@ func TestUseSetting(t *testing.T) {
 		Readonly: true,
 	}
 	conns := UseSetting(primary, Secondary)
-	conns.Select()
-}
-
-func TestUseDefault(t *testing.T) {
-	conns := UseDefault()
 	conns.Select()
 }
