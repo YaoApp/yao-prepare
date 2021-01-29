@@ -1,0 +1,19 @@
+{
+  "default": {
+    "database": "primary"
+  },
+  "database": [
+    {
+      "name": "primary",
+      "driver": "MySQL",
+      "dsn": "root:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
+      "readonly": false
+    },
+    {
+      "name": "secondary",
+      "driver": "MySQL",
+      "dsn": "xiang:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
+      "readonly": true
+    }
+  ]
+}
