@@ -1,6 +1,8 @@
 package database
 
 import (
+	"time"
+
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/arr"
 	"github.com/yaoapp/yao/lib/exception"
@@ -56,14 +58,25 @@ func (pool *Pool) Connect() {
 		arr.Pluck(pool.replicas, func(c conn) gorm.Dialector { return c.dialector }, &replicas)
 		arr.Pluck(pool.replicas, func(c conn) interface{} { return c.name }, &names)
 		if resolver != nil {
-			resolver.Register(dbresolver.Config{Replicas: replicas}, names...)
+			resolver = resolver.Register(dbresolver.Config{Replicas: replicas, Policy: dbresolver.RandomPolicy{}}, names...)
 		} else {
-			resolver = dbresolver.Register(dbresolver.Config{Replicas: replicas}, names...)
+			resolver = dbresolver.Register(dbresolver.Config{Replicas: replicas, Policy: dbresolver.RandomPolicy{}}, names...)
 		}
 	}
 	if resolver != nil {
-		pool.db.Use(resolver)
+		pool.Option(config.Setting.Connection)
+		pool.db.Use(resolver.
+			SetConnMaxIdleTime(time.Duration(pool.option.ConnMaxIdleTime) * time.Hour).
+			SetConnMaxLifetime(time.Duration(pool.option.ConnMaxLifetime) * time.Hour).
+			SetMaxIdleConns(int(pool.option.MaxIdleConns)).
+			SetMaxOpenConns(int(pool.option.MaxOpenConns)),
+		)
 	}
+}
+
+// Option Set the connection pool options
+func (pool *Pool) Option(option config.Connection) {
+	pool.option = option
 }
 
 // DB Select some connection

@@ -21,23 +21,29 @@ func TestUseDefault(t *testing.T) {
 }
 
 func TestUse(t *testing.T) {
-	conns := Use("main")
-	conns.DB()
+	pool := Use("main")
+	db := pool.Read()
+	rows := []map[string]interface{}{}
+	db.Debug().Raw("SELECT * FROM information_schema.processlist WHERE COMMAND='Query'").Find(&rows)
+	json.PrettyPrint(rows)
 }
 
 func TestUseSetting(t *testing.T) {
 	primary := config.Database{
 		Name:     "primary",
-		Driver:   "Mysql",
+		Driver:   "MySQL",
 		DSN:      "root:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
 		Readonly: false,
 	}
 	Secondary := config.Database{
 		Name:     "secondary",
-		Driver:   "Mysql",
+		Driver:   "MySQL",
 		DSN:      "xiang:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
 		Readonly: true,
 	}
-	conns := UseSetting(primary, Secondary)
-	conns.DB()
+	pool := UseSetting(primary, Secondary)
+	db := pool.Select("secondary")
+	rows := []map[string]interface{}{}
+	db.Debug().Raw("SELECT * FROM information_schema.processlist WHERE COMMAND='Query'").Find(&rows)
+	json.PrettyPrint(rows)
 }

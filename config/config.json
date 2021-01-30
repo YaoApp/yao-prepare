@@ -17,5 +17,11 @@
         "readonly": true
       }
     ]
+  },
+  "connection": {
+    "max_idle_time": 1,
+    "max_life_time": 24,
+    "max_idle_conn": 100,
+    "max_open_conn": 200
   }
 }

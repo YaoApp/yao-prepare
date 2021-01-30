@@ -1,8 +1,8 @@
 package database
 
 import (
+	"github.com/yaoapp/yao/config"
 	"gorm.io/gorm"
-	"gorm.io/plugin/dbresolver"
 )
 
 type conn struct {
@@ -15,6 +15,6 @@ type Pool struct {
 	main     gorm.Dialector
 	sources  []conn
 	replicas []conn
-	policy   dbresolver.RandomPolicy
+	option   config.Connection
 	db       *gorm.DB
 }
