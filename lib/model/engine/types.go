@@ -1,4 +1,4 @@
-package driver
+package engine
 
 // Field the field description struct
 type Field struct {
@@ -28,13 +28,18 @@ type SearchOption struct {
 	Type   string   `json:"string"` // primary,unique,index,match
 }
 
+// Table the model mapping table in DB
+type Table struct {
+	Comment string `json:"comment,omitempty"`
+	Name    string `json:"name"`
+	Engine  string `json:"engine,omitempty"` // MySQL Only InnoDB
+}
+
 // Option the model option
 type Option struct {
-	Name   string `json:"name"`
-	Engine struct {
-		Storage string `json:"storage,omitempty"`
-		Query   string `json:"query,omitempty"`
-	}
+	Name   string         `json:"name"`
+	Engine string         `json:"engine,omitempty"`
 	Fields []Field        `json:"fields"`
 	Search []SearchOption `json:"search"`
+	Table  Table          `json:"table,omitempty"`
 }

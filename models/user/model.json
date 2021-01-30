@@ -1,9 +1,11 @@
 {
   "name": "成员",
   "dsn": "default",
-  "engine": {
-    "storage": "MySQL",
-    "query": "ElasticSearch"
+  "engine": "orm",
+  "table": {
+    "comment": "成员",
+    "name": "user",
+    "engine": "InnoDB"
   },
   "fields": [
     {

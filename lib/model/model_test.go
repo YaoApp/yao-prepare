@@ -9,10 +9,10 @@ func TestNew(t *testing.T) {
 	user.Query()
 }
 
-// func TestNewSchema(t *testing.T) {
-// 	sch := NewSchema("Hello", "MySQL")
-// 	sch.Columns()
-// }
+func TestNewSchema(t *testing.T) {
+	sch := NewSchema("User")
+	sch.Columns()
+}
 
 // func TestLoadOption(t *testing.T) {
 // 	option := LoadOption("User", []string{"cache", "file"})

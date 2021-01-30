@@ -4,7 +4,11 @@ import (
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/exception"
 	"github.com/yaoapp/yao/lib/json"
+	"gorm.io/gorm"
 )
+
+// DB the default DB connection porinter
+var DB *gorm.DB
 
 // UseDefault Get or create the default connections
 func UseDefault() *Pool {

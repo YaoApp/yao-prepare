@@ -3,14 +3,16 @@ package model
 import (
 	"strings"
 
+	"github.com/yaoapp/yao/lib/database"
 	"github.com/yaoapp/yao/lib/exception"
+	"github.com/yaoapp/yao/lib/model/engine"
+	"gorm.io/gorm"
 
 	"github.com/gobuffalo/packr"
 	"github.com/yaoapp/yao/lib/json"
-	"github.com/yaoapp/yao/lib/model/driver"
 )
 
-var loadOptionMethods = map[string]func(string) *driver.Option{
+var loadOptionMethods = map[string]func(string) *engine.Option{
 	"code":  loadOptionFromCode,
 	"cache": loadOptionFromCache,
 	"file":  loadOptionFromFile,
@@ -18,30 +20,39 @@ var loadOptionMethods = map[string]func(string) *driver.Option{
 }
 
 //New Create a model instance.
-//name: the model name.
-//loadfrom: code/cache/file/db, default is code.
 //
 //examples:
 //  user  := model.New("user") // Load from the models folder
-//  order := model.New("/some/dir/order", "file", "db")  // Load from a given path, if not exists, load from DB.
-func New(name string, loadfrom ...string) Model {
-	if len(loadfrom) == 0 {
-		loadfrom = []string{"code"}
-	}
-	option := LoadOption(name, loadfrom)
-	switch option.Engine.Storage {
-	case "MySQL":
-		return &driver.MySQL{DSN: name, Option: option}
+func New(name string) Model {
+	return NewWithDB(database.DB, name)
+}
+
+//NewSchema Create a model schema instance.
+//
+//examples:
+//  userSchema  := model.NewSchema("user") // Load from the models folder
+func NewSchema(name string) Schema {
+	return NewSchemaWithDB(database.DB, name)
+}
+
+// NewWithDB Create a model instance and bind connection .
+func NewWithDB(db *gorm.DB, name string) Model {
+	option := LoadOption(name, []string{"code"})
+	switch option.Engine {
+	case "orm":
+		var m Model = &engine.ORM{DB: db, Option: option}
+		return m
 	}
 	return nil
 }
 
-// NewSchema Create a model schema instance
-func NewSchema(name string, engine string) Schema {
-	switch engine {
-	case "MySQL":
-		var m Schema = &driver.MySQL{DSN: name}
-		return m
+// NewSchemaWithDB Create a model instance and bind connection .
+func NewSchemaWithDB(db *gorm.DB, name string) Schema {
+	option := LoadOption(name, []string{"code"})
+	switch option.Engine {
+	case "orm":
+		var schema Schema = &engine.ORM{DB: db, Option: option}
+		return schema
 	}
 	return nil
 }
@@ -53,8 +64,8 @@ func NewSchema(name string, engine string) Schema {
 //examples:
 //   // load the "user" model option from the cache first. if not exist load from file.
 //   option := model.LoadOption("user", []string{"cache", "file"});
-func LoadOption(name string, methods []string) *driver.Option {
-	var option *driver.Option
+func LoadOption(name string, methods []string) *engine.Option {
+	var option *engine.Option
 	for _, method := range methods {
 		load, has := loadOptionMethods[method]
 		if has {
@@ -71,8 +82,8 @@ func LoadOption(name string, methods []string) *driver.Option {
 }
 
 // loadOptionFromCode load a model option from /models folder .
-func loadOptionFromCode(name string) *driver.Option {
-	option := &driver.Option{}
+func loadOptionFromCode(name string) *engine.Option {
+	option := &engine.Option{}
 	filename := strings.ToLower(name) + "/model.json"
 	box := packr.NewBox("../../models")
 	content, err := box.FindString(filename)
@@ -86,18 +97,18 @@ func loadOptionFromCode(name string) *driver.Option {
 }
 
 // loadOptionFromCache load a model option from the cache
-func loadOptionFromCache(name string) *driver.Option {
+func loadOptionFromCache(name string) *engine.Option {
 	return nil
 }
 
 // loadOptionFromFile load a model option from the file
-func loadOptionFromFile(filename string) *driver.Option {
-	option := &driver.Option{}
+func loadOptionFromFile(filename string) *engine.Option {
+	option := &engine.Option{}
 	json.DecodeFile(filename, option)
 	return option
 }
 
 // loadOptionFromDB load a model option from the database
-func loadOptionFromDB(name string) *driver.Option {
+func loadOptionFromDB(name string) *engine.Option {
 	return nil
 }

@@ -1,10 +1,14 @@
 package model
 
-import "github.com/yaoapp/yao/lib/model/driver"
+import (
+	"github.com/yaoapp/yao/lib/model/engine"
+	"gorm.io/gorm"
+)
 
 // Model the model query methods
 type Model interface {
-	GetOption() *driver.Option
+	GetOption() *engine.Option
+	GetDB() *gorm.DB
 	Query()
 	Create()
 	Upsert()
@@ -13,7 +17,6 @@ type Model interface {
 	Exists()
 	Import()
 	Export()
-	ORM()
 }
 
 // Schema the model schema methods

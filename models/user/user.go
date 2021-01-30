@@ -1,8 +1,7 @@
 package user
 
 import (
-	"fmt"
-
+	"github.com/yaoapp/yao/lib/json"
 	"github.com/yaoapp/yao/lib/model"
 )
 
@@ -20,6 +19,8 @@ func New() *User {
 
 // Login the user login
 func (user *User) Login() {
-	option := user.GetOption()
-	fmt.Printf("%s user login \n", option.Name)
+	db := user.GetDB()
+	rows := []map[string]interface{}{}
+	db.Raw("SELECT name,mobile from `user` WHERE mobile IS NOT NULL limit 2").Find(&rows)
+	json.PrettyPrint(rows)
 }

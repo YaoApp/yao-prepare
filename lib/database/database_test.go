@@ -10,13 +10,12 @@ import (
 
 func init() {
 	config.Setting = config.Load(".yao.env", path.Join(config.PWD(), "/../.."))
+	DB = UseDefault().DB()
 }
 
 func TestUseDefault(t *testing.T) {
-	pool := UseDefault()
-	db := pool.DB()
 	apps := []map[string]interface{}{}
-	db.Debug().Table("app").Limit(2).Find(&apps)
+	DB.Debug().Table("app").Limit(2).Find(&apps)
 	json.PrettyPrint(apps)
 }
 
