@@ -40,7 +40,7 @@ func (exception *Exception) Ctx(context interface{}) *Exception {
 func (exception *Exception) Print() {
 	f := colorjson.NewFormatter()
 	f.Indent = 4
-	var res map[string]interface{}
+	var res interface{}
 	txt, _ := json.Marshal(exception)
 	json.Unmarshal(txt, &res)
 	s, _ := f.Marshal(res)

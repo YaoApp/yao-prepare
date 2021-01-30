@@ -15,9 +15,9 @@ func init() {
 func TestUseDefault(t *testing.T) {
 	pool := UseDefault()
 	db := pool.DB()
-	app := map[string]interface{}{}
-	db.Table("app").Find(&app)
-	json.PrettyPrint(app)
+	apps := []map[string]interface{}{}
+	db.Debug().Table("app").Limit(2).Find(&apps)
+	json.PrettyPrint(apps)
 }
 
 func TestUse(t *testing.T) {

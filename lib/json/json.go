@@ -73,7 +73,7 @@ func SaveFile(v interface{}, file string) {
 func PrettyPrint(v interface{}) {
 	f := colorjson.NewFormatter()
 	f.Indent = 4
-	var res map[string]interface{}
+	var res interface{}
 	txt, _ := jsoniter.Marshal(v)
 	jsoniter.Unmarshal(txt, &res)
 	s, _ := f.Marshal(res)
