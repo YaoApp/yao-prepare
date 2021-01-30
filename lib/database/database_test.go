@@ -5,33 +5,39 @@ import (
 	"testing"
 
 	"github.com/yaoapp/yao/config"
+	"github.com/yaoapp/yao/lib/json"
 )
 
 func init() {
-	config.Setting = config.Load("config.json", path.Join(config.PWD(), "/../../config"))
+	config.Setting = config.Load(".yao.env", path.Join(config.PWD(), "/../.."))
 }
 
 func TestUseDefault(t *testing.T) {
-	conns := UseDefault()
-	conns.Select()
+	pool := UseDefault()
+	db := pool.DB()
+	app := map[string]interface{}{}
+	db.Table("app").Find(&app)
+	json.PrettyPrint(app)
 }
 
 func TestUse(t *testing.T) {
 	conns := Use("main")
-	conns.Select()
+	conns.DB()
 }
 
 func TestUseSetting(t *testing.T) {
 	primary := config.Database{
+		Name:     "primary",
 		Driver:   "Mysql",
 		DSN:      "root:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
 		Readonly: false,
 	}
 	Secondary := config.Database{
+		Name:     "secondary",
 		Driver:   "Mysql",
 		DSN:      "xiang:123456@tcp(192.168.31.119:3306)/xiang?charset=utf8mb4&parseTime=True&loc=Local",
 		Readonly: true,
 	}
 	conns := UseSetting(primary, Secondary)
-	conns.Select()
+	conns.DB()
 }

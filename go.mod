@@ -10,4 +10,7 @@ require (
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519 // indirect
 	github.com/json-iterator/go v1.1.10
 	github.com/rogpeppe/go-internal v1.7.0 // indirect
+	gorm.io/driver/mysql v1.0.3
+	gorm.io/gorm v1.20.12
+	gorm.io/plugin/dbresolver v1.1.0
 )

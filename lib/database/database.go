@@ -1,8 +1,6 @@
 package database
 
 import (
-	"fmt"
-
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/exception"
 	"github.com/yaoapp/yao/lib/json"
@@ -32,11 +30,10 @@ func Use(name string) *Pool {
 
 // UseSetting Get or create connections from given settings
 func UseSetting(settings ...config.Database) *Pool {
-	fmt.Printf("settings: %#v", settings)
-	return &Pool{}
-}
-
-// Select Select one connection
-func (conns *Pool) Select(readonly ...bool) {
-
+	pool := &Pool{}
+	for _, setting := range settings {
+		pool.Add(setting)
+	}
+	pool.Connect()
+	return pool
 }
