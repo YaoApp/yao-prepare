@@ -6,6 +6,6 @@ import (
 )
 
 func TestSetting(t *testing.T) {
-	Setting = Load("config.json", PWD())
+	Setting = Load("config.yset", PWD()+"/assets/")
 	fmt.Printf("%#v\n", Setting.Database["main"][0])
 }

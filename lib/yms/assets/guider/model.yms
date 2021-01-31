@@ -1,0 +1,86 @@
+{
+  "name": "导购",
+  "engine": "orm",
+  "table": {
+    "comment": "导购",
+    "name": "guider",
+    "engine": "InnoDB"
+  },
+  "fields": [
+    {
+      "comment": "导购ID",
+      "name": "id_guider",
+      "type": "string",
+      "args": 128,
+      "example": "48C01B7E738D4ECFAEAFA67989D29FB5",
+      "nullable": false,
+      "generate": "UUID",
+      "extra": {
+        "title": "导购ID",
+        "description": "导购ID,由系统自动生成,32位大写字母+数字",
+        "type": "string",
+        "pattern": "^[0-9A-Z]{32}$"
+      }
+    },
+    {
+      "field": "id_no",
+      "from": "/common/fields:User",
+      "name": "guider_no",
+      "comment": "导购号",
+      "extra": {
+        "title": "导购号",
+        "description": "导购号,由系统自动生成,32位大写字母+数字"
+      }
+    },
+    {
+      "comment": "昵称",
+      "name": "nickname",
+      "type": "string",
+      "args": 128,
+      "example": "张三",
+      "nullable": true,
+      "extra": {
+        "title": "昵称",
+        "description": "昵称,微信昵称",
+        "type": "string"
+      }
+    },
+    {
+      "field": "gender",
+      "from": "/common/fields:User"
+    },
+    {
+      "field": "mobile",
+      "from": "/common/fields:User"
+    },
+    {
+      "field": "unionid",
+      "from": "/common/fields:User"
+    },
+    {
+      "field": "openid",
+      "from": "/common/fields:User"
+    },
+    {
+      "comment": "登录密码",
+      "name": "password",
+      "type": "string",
+      "args": 40,
+      "example": "Mmak3103918+",
+      "nullable": true,
+      "encoder": "PASSWORD-HASH",
+      "extra": {
+        "title": "登录密码",
+        "description": "登录密码,必须包含大小写字母,数字和符号, 至少8位。",
+        "type": "string",
+        "pattern": "^[A-Z0-9a-z]{8}$"
+      }
+    }
+  ],
+  "search": [
+    { "field": "id_guider", "type": "primary" },
+    { "field": "mobile", "type": "unique" },
+    { "field": "unionid", "type": "unique" },
+    { "field": "password", "type": "index" }
+  ]
+}

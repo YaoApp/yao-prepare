@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	config.Setting = config.Load(".yao.env", path.Join(config.PWD(), "/../.."))
+	config.Setting = config.Load(".yset", path.Join(config.PWD(), "/../.."))
 	DB = UseDefault().DB()
 }
 

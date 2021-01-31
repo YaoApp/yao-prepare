@@ -1,4 +1,4 @@
-package user
+package yms
 
 import (
 	"path"
@@ -13,8 +13,6 @@ func init() {
 	database.DB = database.UseDefault().DB()
 }
 
-func TestNew(t *testing.T) {
-	user := New()
-	user.Query()
-	user.Login()
+func TestLoad(t *testing.T) {
+	Load("sys:/yms/assets", "testing")
 }

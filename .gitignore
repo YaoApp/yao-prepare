@@ -17,5 +17,8 @@
 
 # Commands 
 commands/xiang/xiang
+
+# Environment
 .yao.env
+.yset
 vendor
