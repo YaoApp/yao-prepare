@@ -56,7 +56,9 @@ func UseSetting(setting config.Storage) Fs {
 func OsFs(basepath string) Fs {
 	return Fs{
 		root: basepath,
-		Fs:   afero.NewBasePathFs(afero.NewOsFs(), basepath),
+		Afero: afero.Afero{
+			Fs: afero.NewBasePathFs(afero.NewOsFs(), basepath),
+		},
 	}
 }
 
@@ -64,7 +66,9 @@ func OsFs(basepath string) Fs {
 func OsFsRead(basepath string) Fs {
 	return Fs{
 		root: basepath,
-		Fs:   afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewOsFs(), basepath)),
+		Afero: afero.Afero{
+			Fs: afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewOsFs(), basepath)),
+		},
 	}
 }
 
@@ -72,7 +76,9 @@ func OsFsRead(basepath string) Fs {
 func CosFs(name string) Fs {
 	return Fs{
 		root: name,
-		Fs:   afero.NewBasePathFs(afero.NewOsFs(), "/base/path"),
+		Afero: afero.Afero{
+			Fs: afero.NewBasePathFs(afero.NewOsFs(), "/base/path"),
+		},
 	}
 }
 
@@ -80,7 +86,9 @@ func CosFs(name string) Fs {
 func CosFsRead(name string) Fs {
 	return Fs{
 		root: name,
-		Fs:   afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewOsFs(), "/base/path")),
+		Afero: afero.Afero{
+			Fs: afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewOsFs(), "/base/path")),
+		},
 	}
 }
 
@@ -88,7 +96,9 @@ func CosFsRead(name string) Fs {
 func MemFs(namespace string) Fs {
 	return Fs{
 		root: namespace,
-		Fs:   afero.NewBasePathFs(afero.NewMemMapFs(), "/"+namespace),
+		Afero: afero.Afero{
+			Fs: afero.NewBasePathFs(afero.NewMemMapFs(), "/"+namespace),
+		},
 	}
 }
 
@@ -96,6 +106,8 @@ func MemFs(namespace string) Fs {
 func MemFsRead(namespace string) Fs {
 	return Fs{
 		root: namespace,
-		Fs:   afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewMemMapFs(), "/"+namespace)),
+		Afero: afero.Afero{
+			Fs: afero.NewReadOnlyFs(afero.NewBasePathFs(afero.NewMemMapFs(), "/"+namespace)),
+		},
 	}
 }

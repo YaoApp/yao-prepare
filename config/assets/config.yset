@@ -6,7 +6,7 @@
   "storage": {
     "main": {
       "engine": "osfs",
-      "root": "/Users/max/Code/yao/yao/storage",
+      "root": "/Users/max/Code/yao/yao/upload",
       "readonly": false
     },
     "memory": {
@@ -16,7 +16,7 @@
     },
     "private": {
       "engine": "osfs",
-      "root": "/Users/max/Code/yao/yao/storage",
+      "root": "/Users/max/Code/yao/yao/upload",
       "readonly": false
     },
     "public": {
