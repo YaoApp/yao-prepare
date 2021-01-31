@@ -16,9 +16,21 @@ type Connection struct {
 	MaxOpenConns    uint32 `json:"max_open_conn,omitempty"`
 }
 
-// Config Yao framework config
+// Storage the storage configuration
+type Storage struct {
+	Engine    string `json:"engine"` // osfs/cos/mem ...
+	Root      string `json:"root,omitempty"`
+	Namespace string `json:"namespace,omitempty"`  // mem only
+	SecretID  string `json:"secret_id,omitempty"`  // cos only
+	SecretKey string `json:"secret_key,omitempty"` // cos only
+	Bucket    string `json:"bucket,omitempty"`     // cos only (bucket name)
+	Readonly  bool   `json:"readonly,omitempty"`
+}
+
+// Config Yao framework configuration
 type Config struct {
 	Default    map[string]string     `json:"default"`
 	Database   map[string][]Database `json:"database"`
+	Storage    map[string]Storage    `json:"storage"`
 	Connection Connection            `json:"connection"`
 }

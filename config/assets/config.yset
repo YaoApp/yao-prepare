@@ -1,6 +1,31 @@
 {
   "default": {
-    "database": "main"
+    "database": "main",
+    "storage": "main"
+  },
+  "storage": {
+    "main": {
+      "engine": "osfs",
+      "root": "/Users/max/Code/yao/yao/storage",
+      "readonly": false
+    },
+    "memory": {
+      "engine": "mem",
+      "namespace": "filecache",
+      "readonly": false
+    },
+    "private": {
+      "engine": "osfs",
+      "root": "/Users/max/Code/yao/yao/storage",
+      "readonly": false
+    },
+    "public": {
+      "engine": "cos",
+      "secret_id": "COS_SECRETID",
+      "secret_key": "COS_SECRETKEY",
+      "bucket": "yao-test",
+      "readonly": false
+    }
   },
   "database": {
     "main": [

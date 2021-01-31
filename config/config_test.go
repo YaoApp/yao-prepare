@@ -1,11 +1,12 @@
 package config
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/yaoapp/yao/lib/json"
 )
 
 func TestSetting(t *testing.T) {
 	Setting = Load("config.yset", PWD()+"/assets/")
-	fmt.Printf("%#v\n", Setting.Database["main"][0])
+	json.PrettyPrint(Setting)
 }
