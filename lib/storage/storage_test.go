@@ -33,3 +33,13 @@ func TestMemFs(t *testing.T) {
 	content, err := fs.ReadFile("/test.md")
 	fmt.Printf("%s ERR:%#v\n", content, err)
 }
+
+func TestBin(t *testing.T) {
+	fs := Bin()
+	contents, _ := fs.ReadFile("/assets/common/fields.yms")
+	fmt.Printf("%s\n\n", contents)
+
+	dirs, err := fs.Readdir("/assets")
+	fmt.Printf("%s\n Err:%#v", dirs, err)
+	// fs.ListenAndServe(":7749", "/", "/")
+}
