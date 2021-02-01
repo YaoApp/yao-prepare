@@ -24,7 +24,7 @@
     },
     {
       "field": "id_no",
-      "from": "/common/fields:User",
+      "from": "/ec/user.yms",
       "name": "guider_no",
       "comment": "导购号",
       "extra": {
@@ -46,20 +46,25 @@
       }
     },
     {
+      "comment": "真名",
+      "field": "nickname",
+      "name": "name"
+    },
+    {
       "field": "gender",
-      "from": "/common/fields:User"
+      "from": "/ec/user.yms"
     },
     {
       "field": "mobile",
-      "from": "/common/fields:User"
+      "from": "/ec/user.yms"
     },
     {
       "field": "unionid",
-      "from": "/common/fields:User"
+      "from": "/ec/user.yms"
     },
     {
       "field": "openid",
-      "from": "/common/fields:User"
+      "from": "/ec/user.yms"
     },
     {
       "comment": "登录密码",

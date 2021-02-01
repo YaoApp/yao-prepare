@@ -6,6 +6,7 @@ import (
 
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/database"
+	"github.com/yaoapp/yao/lib/json"
 )
 
 func init() {
@@ -15,4 +16,5 @@ func init() {
 
 func TestLoad(t *testing.T) {
 	Load(path.Join(config.PWD(), "assets"), "test")
+	json.PrettyPrint(Get("test", "/guider/model.yms"))
 }

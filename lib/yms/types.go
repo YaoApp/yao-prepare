@@ -7,18 +7,22 @@ type Field struct {
 	Type     string      `json:"string"`
 	Args     interface{} `json:"args,omitempty"`
 	Example  interface{} `json:"example,omitempty"`
-	Nullable bool        `json:"nullable,omitempty"`
+	Nullable *bool       `json:"nullable,omitempty"`
 	Generate string      `json:"generate,omitempty"` // Increment, UUID,...
 	Encoder  string      `json:"encoder,omitempty"`  // AES-256, AES-128, PASSWORD-HASH, ...
 	Decoder  string      `json:"decoder,omitempty"`  // AES-256, AES-128, ...
-	Extra    struct {
-		Title       string `json:"title,omitempty"`
-		Description string `json:"description,omitempty"`
-		Type        string `json:"type,omitempty"`
-		Pattern     string `json:"pattern,omitempty"`
-	} `json:"extra,omitempty"`
-	Field string `json:"field,omitempty"` // Extend from the parent field
-	From  string `json:"from,omitempty"`  // Extend from which structure
+	Extra    *FieldExtra `json:"extra,omitempty"`
+	Field    string      `json:"field,omitempty"` // Extend from the parent field
+	From     string      `json:"from,omitempty"`  // Extend from which structure
+	parsed   bool
+}
+
+// FieldExtra the field extra struct
+type FieldExtra struct {
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+	Type        string `json:"type,omitempty"`
+	Pattern     string `json:"pattern,omitempty"`
 }
 
 // Search the search option struct
@@ -37,9 +41,13 @@ type Table struct {
 
 // File the YMS file.
 type File struct {
-	Name   string   `json:"name"`
-	Table  Table    `json:"table,omitempty"`
-	Engine string   `json:"engine,omitempty"`
-	Fields []Field  `json:"fields"`
-	Search []Search `json:"search"`
+	namespace string
+	path      string
+	parsed    bool
+	Name      string            `json:"name"`
+	Table     Table             `json:"table,omitempty"`
+	Engine    string            `json:"engine,omitempty"`
+	Fields    []Field           `json:"fields"`
+	FieldsMap map[string]*Field `json:"mapping,omitempty"`
+	Search    []Search          `json:"search"`
 }

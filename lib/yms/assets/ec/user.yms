@@ -1,9 +1,8 @@
 {
-  "Error": [
+  "name": "通用",
+  "fields": [
     { "name": "code", "comment": "错误码", "type": "string" },
-    { "name": "message", "comment": "错误描述", "type": "string" }
-  ],
-  "User": [
+    { "name": "message", "comment": "错误描述", "type": "string" },
     {
       "comment": "性别",
       "name": "gender",
