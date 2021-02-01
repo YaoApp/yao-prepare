@@ -43,7 +43,7 @@ func (exception *Exception) Print() {
 	var res interface{}
 	txt, _ := json.Marshal(exception)
 	json.Unmarshal(txt, &res)
-	s, _ := f.Marshal(res)
+	s, _ := json.Marshal(res)
 	fmt.Printf("%s\n", s)
 }
 

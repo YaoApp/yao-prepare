@@ -8,10 +8,8 @@ import (
 	"github.com/TylerBrock/colorjson"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/yaoapp/yao/lib/exception"
+	"github.com/yaoapp/yao/lib/t"
 )
-
-// M Alias map[string]interface{}
-type M map[string]interface{}
 
 // Decode Decode the JSON format text
 func Decode(content string, v interface{}) {
@@ -34,7 +32,7 @@ func EncodeBytes(v interface{}) []byte {
 	jsonbytes, err := jsoniter.Marshal(v)
 	if err != nil {
 		exception.Err(err, 500).
-			Ctx(M{"v": v}).
+			Ctx(t.M{"v": v}).
 			Throw()
 	}
 	return jsonbytes
@@ -45,14 +43,14 @@ func DecodeFile(file string, v interface{}) {
 
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		exception.New("file does not exist.", 400).
-			Ctx(M{"filepath": file}).
+			Ctx(t.M{"filepath": file}).
 			Throw()
 	}
 
 	jsonbytes, err := ioutil.ReadFile(file)
 	if err != nil {
 		exception.Err(err, 500).
-			Ctx(M{"filepath": file}).
+			Ctx(t.M{"filepath": file}).
 			Throw()
 	}
 	DecodeBytes(jsonbytes, v)
@@ -64,7 +62,7 @@ func SaveFile(v interface{}, file string) {
 	err := ioutil.WriteFile(file, jsonbytes, 0644)
 	if err != nil {
 		exception.Err(err, 500).
-			Ctx(M{"filepath": file}).
+			Ctx(t.M{"filepath": file}).
 			Throw()
 	}
 }

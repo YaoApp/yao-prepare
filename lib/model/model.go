@@ -6,6 +6,7 @@ import (
 	"github.com/yaoapp/yao/lib/database"
 	"github.com/yaoapp/yao/lib/exception"
 	"github.com/yaoapp/yao/lib/model/engine"
+	"github.com/yaoapp/yao/lib/t"
 	"gorm.io/gorm"
 
 	"github.com/gobuffalo/packr"
@@ -76,7 +77,7 @@ func LoadOption(name string, methods []string) *engine.Option {
 		}
 	}
 	exception.New(name+" not found!", 404).
-		Ctx(json.M{"name": name, "methods": methods}).
+		Ctx(t.M{"name": name, "methods": methods}).
 		Throw()
 	return nil
 }
@@ -89,7 +90,7 @@ func loadOptionFromCode(name string) *engine.Option {
 	content, err := box.FindString(filename)
 	if err != nil {
 		exception.Err(err, 500).
-			Ctx(json.M{"filename": filename}).
+			Ctx(t.M{"filename": filename}).
 			Throw()
 	}
 	json.Decode(content, option)

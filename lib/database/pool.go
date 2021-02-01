@@ -6,7 +6,7 @@ import (
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/arr"
 	"github.com/yaoapp/yao/lib/exception"
-	"github.com/yaoapp/yao/lib/json"
+	"github.com/yaoapp/yao/lib/t"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
@@ -40,7 +40,7 @@ func (pool *Pool) Connect() {
 	db, err := gorm.Open(pool.main, &gorm.Config{})
 	if err != nil {
 		exception.Err(err, 500).
-			Ctx(json.M{"pool": pool.main}).
+			Ctx(t.M{"pool": pool.main}).
 			Throw()
 	}
 	pool.db = db

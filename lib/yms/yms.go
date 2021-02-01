@@ -1,28 +1,49 @@
 // Package yms The (Y)ao (M)odel (S)pecification
 package yms
 
-// LoadSYS load the system YMS files into the memory space.
-func LoadSYS() {}
+import (
+	"os"
+	"path/filepath"
 
-// LoadAPP load the application YMS files into the memory space.
-func LoadAPP(name string) {}
+	"github.com/yaoapp/yao/lib/exception"
+	"github.com/yaoapp/yao/lib/storage"
+	"github.com/yaoapp/yao/lib/t"
+)
 
-// Load load the YMS files into the memory space.
-func Load(path string, namespace string) {}
+// space The memory space for saving parse YMS file.
+var space map[string]storage.Fs
 
-// OpenSYS open the system YMS file.
-func OpenSYS(file string) *File {
-	return Open("system", file, "system")
+func init() {
+	space = map[string]storage.Fs{}
 }
 
-// OpenAPP open the application YMS file.
-func OpenAPP(name string, file string) *File {
-	return Open(name, file, "app")
+// Load load the YMS files into the memory space.
+func Load(path string, namespace string) {
+
+	if _, has := space[namespace]; has {
+		exception.New("namespace has been used!", 500).
+			Ctx(t.M{"path": path, namespace: namespace}).
+			Throw()
+	}
+
+	space[namespace] = storage.MemFs(namespace)
+	fs := storage.OsFs(path)
+	fs.Walk("/", func(path string, info os.FileInfo, err error) error {
+		if filepath.Ext(path) != ".yms" {
+			return nil
+		}
+		contents, err := fs.ReadFile(path)
+		if err != nil {
+			exception.Err(err, 500).
+				Ctx(t.M{"path": path, namespace: namespace}).
+				Throw()
+		}
+		space[namespace].WriteFile(path, contents, 0644)
+		return nil
+	})
 }
 
 // Open open the YMS file.
-func Open(name string, file string, namespace string) *File {
+func Open(name string, filename string, namespace string) *File {
 	return &File{}
 }
-
-func parse() {}

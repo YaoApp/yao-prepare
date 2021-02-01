@@ -7,6 +7,7 @@ import (
 
 	"github.com/yaoapp/yao/lib/exception"
 	"github.com/yaoapp/yao/lib/json"
+	"github.com/yaoapp/yao/lib/t"
 )
 
 // Setting the config setting
@@ -28,7 +29,7 @@ func Load(name string, path ...string) *Config {
 
 	if config == nil {
 		exception.New("Can't find configuration file", 404).
-			Ctx(json.M{"path": path}).
+			Ctx(t.M{"path": path}).
 			Throw()
 	}
 	return config

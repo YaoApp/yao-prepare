@@ -14,5 +14,5 @@ func init() {
 }
 
 func TestLoad(t *testing.T) {
-	Load("sys:/yms/assets", "testing")
+	Load(path.Join(config.PWD(), "assets"), "test")
 }

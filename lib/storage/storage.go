@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/afero"
 	"github.com/yaoapp/yao/config"
 	"github.com/yaoapp/yao/lib/exception"
-	"github.com/yaoapp/yao/lib/json"
+	"github.com/yaoapp/yao/lib/t"
 )
 
 // UseDefault Return the filesystem interface with config name
@@ -12,7 +12,7 @@ func UseDefault() Fs {
 	name, has := config.Setting.Default["storage"]
 	if !has {
 		exception.New("the default storage config does not set!", 404).
-			Ctx(json.M{"Default": config.Setting.Default}).
+			Ctx(t.M{"Default": config.Setting.Default}).
 			Throw()
 	}
 	return Use(name)
@@ -23,7 +23,7 @@ func Use(name string) Fs {
 	setting, has := config.Setting.Storage[name]
 	if !has {
 		exception.New("Storage config not found!", 404).
-			Ctx(json.M{"name": name, "Storage": config.Setting.Storage}).
+			Ctx(t.M{"name": name, "Storage": config.Setting.Storage}).
 			Throw()
 	}
 	return UseSetting(setting)
