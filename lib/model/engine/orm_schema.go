@@ -4,7 +4,7 @@ import "fmt"
 
 // Columns Get the Columns
 func (m *ORM) Columns() {
-	fmt.Printf("Columns Engine is: %s\n", m.Option.Engine)
+	fmt.Printf("Columns table: %s\n", m.File.Table.Name)
 }
 
 // CreateColumn Create a column

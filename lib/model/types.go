@@ -1,14 +1,11 @@
 package model
 
 import (
-	"github.com/yaoapp/yao/lib/model/engine"
 	"gorm.io/gorm"
 )
 
 // Model the model query methods
 type Model interface {
-	GetOption() *engine.Option
-	GetDB() *gorm.DB
 	Query()
 	Create()
 	Upsert()
@@ -17,6 +14,7 @@ type Model interface {
 	Exists()
 	Import()
 	Export()
+	ORM() *gorm.DB
 }
 
 // Schema the model schema methods
@@ -30,4 +28,5 @@ type Schema interface {
 	UpsertRelation()
 	DeleteRelation()
 	Upgrade()
+	ORM() *gorm.DB
 }

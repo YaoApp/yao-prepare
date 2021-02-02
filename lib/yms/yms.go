@@ -27,7 +27,14 @@ func Load(path string, namespace string) {
 			Throw()
 	}
 	files[namespace] = map[string]*File{}
+
 	fs := storage.OsFs(path)
+	if exists, err := fs.Exists("/"); err != nil || !exists {
+		exception.New(path+" does not exists", 500).
+			Ctx(t.M{"path": path, namespace: namespace}).
+			Throw()
+	}
+
 	fs.Walk("/", func(path string, info os.FileInfo, err error) error {
 		if filepath.Ext(path) != ".yms" {
 			return nil

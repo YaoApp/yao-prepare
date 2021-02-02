@@ -1,31 +1,26 @@
 package engine
 
 import (
-	"github.com/yaoapp/yao/lib/json"
+	"fmt"
+
+	"github.com/yaoapp/yao/lib/yms"
 	"gorm.io/gorm"
 )
 
 // ORM ORM driver
 type ORM struct {
-	DB     *gorm.DB
-	Option *Option
+	DB   *gorm.DB
+	File *yms.File
 }
 
-// GetOption Get the model option
-func (m *ORM) GetOption() *Option {
-	return m.Option
-}
-
-// GetDB Get the DB instance
-func (m *ORM) GetDB() *gorm.DB {
+// ORM Return the ORM DB instance
+func (m *ORM) ORM() *gorm.DB {
 	return m.DB
 }
 
 // Query query by params
 func (m *ORM) Query() {
-	rows := []map[string]interface{}{}
-	m.DB.Table(m.Option.Table.Name).Limit(20).Find(&rows)
-	json.PrettyPrint(rows)
+	fmt.Printf("Query table: %s\n", m.File.Table.Name)
 }
 
 // Create Create
