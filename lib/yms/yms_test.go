@@ -16,5 +16,21 @@ func init() {
 
 func TestLoad(t *testing.T) {
 	Load(path.Join(config.PWD(), "assets"), "test")
-	json.PrettyPrint(Get("test", "/guider/model.yms"))
+	MustHave("test")
+	MustHaveFile("test",
+		"/guider/model.yms",
+		"/user/model.yms",
+		"/ec/error.yms",
+		"/ec/user.yms",
+	)
+}
+
+func TestNamespaces(t *testing.T) {
+	namespaces := Namespaces()
+	json.PrettyPrint(namespaces)
+}
+
+func TestFiles(t *testing.T) {
+	files := Files("test")
+	json.PrettyPrint(files)
 }
