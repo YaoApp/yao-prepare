@@ -4,23 +4,23 @@ import (
 	"path"
 	"testing"
 
-	"github.com/yaoapp/yao/config"
-	"github.com/yaoapp/yao/lib/database"
+	"github.com/yaoapp/yao/lib/exception"
 	"github.com/yaoapp/yao/lib/yms"
+	"github.com/yaoapp/yao/test"
 )
 
 func init() {
-	config.Setting = config.Load(".yset", path.Join(config.PWD(), "/../.."))
-	yms.Load(path.Join(config.PWD(), "/../../lib/yms/assets"), "system")
-	database.DB = database.UseDefault().DB()
+	test.Use("unit")
+	yms.Load(path.Join(test.Root(), "/lib/yms/assets"), "system")
 }
 
-func TestNew(t *testing.T) {
-	user := New("User")
-	user.Query()
+func TestUpgrade(t *testing.T) {
+	defer exception.CatchPrint()
+	schema := NewSchema("User")
+	schema.Upgrade()
 }
 
-func TestNewSchema(t *testing.T) {
-	sch := NewSchema("User")
-	sch.Columns()
-}
+// func TestNew(t *testing.T) {
+// 	user := New("User")
+// 	user.Query()
+// }

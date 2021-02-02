@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TylerBrock/colorjson"
+	"github.com/fatih/color"
 )
 
 // Exception the Exception type
@@ -30,6 +31,26 @@ func Err(err error, code int) *Exception {
 	}
 }
 
+// CatchPrint Catch the exception and print it
+func CatchPrint() {
+	if r := recover(); r != nil {
+		switch r.(type) {
+		case *Exception:
+			color.Red(r.(*Exception).Message)
+			r.(*Exception).Print()
+			break
+		case string:
+			color.Red(r.(string))
+			break
+		case error:
+			color.Red(r.(error).Error())
+			break
+		default:
+			color.Red("%#v\n", r)
+		}
+	}
+}
+
 // Ctx Add the context for the exception.
 func (exception *Exception) Ctx(context interface{}) *Exception {
 	exception.Context = context
@@ -39,16 +60,15 @@ func (exception *Exception) Ctx(context interface{}) *Exception {
 // Print print the exception
 func (exception *Exception) Print() {
 	f := colorjson.NewFormatter()
-	f.Indent = 4
+	f.Indent = 2
 	var res interface{}
 	txt, _ := json.Marshal(exception)
 	json.Unmarshal(txt, &res)
-	s, _ := json.Marshal(res)
-	fmt.Printf("%s\n", s)
+	s, _ := colorjson.Marshal(res)
+	fmt.Println(string(s))
 }
 
 // Throw Throw the exception and terminal progress.
 func (exception *Exception) Throw() {
-	exception.Print()
 	panic(exception)
 }

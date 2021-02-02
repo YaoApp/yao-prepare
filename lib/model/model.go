@@ -13,7 +13,7 @@ import (
 //New Create a model instance.
 //
 //examples:
-//  user  := model.New("user") // Load from the models folder
+//  user  := model.New("user")
 func New(name string) Model {
 	return NewWithDB(database.DB, name)
 }
@@ -21,14 +21,14 @@ func New(name string) Model {
 //NewSchema Create a model schema instance.
 //
 //examples:
-//  userSchema  := model.NewSchema("user") // Load from the models folder
+//  userSchema  := model.NewSchema("user")
 func NewSchema(name string) Schema {
 	return NewSchemaWithDB(database.DB, name)
 }
 
 // NewWithDB Create a model instance and bind connection .
 func NewWithDB(db *gorm.DB, name string) Model {
-	filename := strings.ToLower(filepath.Join("/", name, "model.yms"))
+	filename := YMSFile(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
 	case "orm":
@@ -40,7 +40,7 @@ func NewWithDB(db *gorm.DB, name string) Model {
 
 // NewSchemaWithDB Create a model instance and bind connection .
 func NewSchemaWithDB(db *gorm.DB, name string) Schema {
-	filename := strings.ToLower(filepath.Join("/", name, "model.yms"))
+	filename := YMSFile(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
 	case "orm":
@@ -48,4 +48,9 @@ func NewSchemaWithDB(db *gorm.DB, name string) Schema {
 		return schema
 	}
 	return nil
+}
+
+// YMSFile Get the YMS file path
+func YMSFile(name string) string {
+	return strings.ToLower(filepath.Join("/", name, "model.yms"))
 }

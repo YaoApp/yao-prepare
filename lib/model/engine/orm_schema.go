@@ -1,6 +1,10 @@
 package engine
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/yaoapp/yao/lib/exception"
+)
 
 // Columns Get the Columns
 func (m *ORM) Columns() {
@@ -29,4 +33,6 @@ func (m *ORM) UpsertRelation() {}
 func (m *ORM) DeleteRelation() {}
 
 // Upgrade Upgrade the model struct
-func (m *ORM) Upgrade() {}
+func (m *ORM) Upgrade() {
+	exception.New("test error", 500).Throw()
+}
