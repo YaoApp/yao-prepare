@@ -21,5 +21,6 @@ commands/xiang/xiang
 # Environment
 .yao.env
 .yset
+.*.yset
 vendor
 upload

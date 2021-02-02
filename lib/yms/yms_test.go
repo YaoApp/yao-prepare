@@ -4,18 +4,17 @@ import (
 	"path"
 	"testing"
 
-	"github.com/yaoapp/yao/config"
-	"github.com/yaoapp/yao/lib/database"
-	"github.com/yaoapp/yao/lib/json"
+	"github.com/stretchr/testify/assert"
+	"github.com/yaoapp/yao/lib/arr"
+	"github.com/yaoapp/yao/test"
 )
 
 func init() {
-	config.Setting = config.Load(".yset", path.Join(config.PWD(), "/../.."))
-	database.DB = database.UseDefault().DB()
+	test.Use("unit")
 }
 
 func TestLoad(t *testing.T) {
-	Load(path.Join(config.PWD(), "assets"), "test")
+	Load(path.Join(test.Root(), "/lib/yms/assets"), "test")
 	MustHave("test")
 	MustHaveFile("test",
 		"/guider/model.yms",
@@ -23,14 +22,22 @@ func TestLoad(t *testing.T) {
 		"/ec/error.yms",
 		"/ec/user.yms",
 	)
+	assert.True(t, true)
 }
 
 func TestNamespaces(t *testing.T) {
 	namespaces := Namespaces()
-	json.PrettyPrint(namespaces)
+	shouldbe := "test"
+	assert.True(t, arr.Have(namespaces, "test"), `the loaded namespaces should be %#v`, shouldbe)
 }
 
 func TestFiles(t *testing.T) {
 	files := Files("test")
-	json.PrettyPrint(files)
+	shouldbe := []string{
+		"/ec/error.yms",
+		"/ec/user.yms",
+		"/guider/model.yms",
+		"/user/model.yms",
+	}
+	assert.True(t, arr.HaveMany(files, shouldbe), `the loaded files should be %#v`, shouldbe)
 }

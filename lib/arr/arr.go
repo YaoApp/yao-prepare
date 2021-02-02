@@ -7,7 +7,7 @@ import (
 	"github.com/yaoapp/yao/lib/t"
 )
 
-// Pluck pluck a list of the given key / value pairs from the array.
+// Pluck pluck a list of the given key / value pairs from the array/slice.
 func Pluck(array interface{}, find interface{}, v interface{}) {
 	values := reflect.ValueOf(array)
 	if values.Kind() != reflect.Array && values.Kind() != reflect.Slice {
@@ -51,4 +51,43 @@ func Pluck(array interface{}, find interface{}, v interface{}) {
 	}
 
 	result.Elem().Set(slice)
+}
+
+// Have Check element exists in a array/slice
+func Have(array interface{}, item interface{}) bool {
+	MustBeArray(array)
+	values := reflect.ValueOf(array)
+	length := values.Len()
+	for i := 0; i < length; i++ {
+		elm := values.Index(i)
+		if elm.Interface() == item {
+			return true
+		}
+
+	}
+	return false
+}
+
+// HaveMany Check each element exists in a array/slice
+func HaveMany(array interface{}, items interface{}) bool {
+	MustBeArray(items)
+	values := reflect.ValueOf(items)
+	length := values.Len()
+	for i := 0; i < length; i++ {
+		item := values.Index(i)
+		if !Have(array, item.Interface()) {
+			return false
+		}
+	}
+	return true
+}
+
+// MustBeArray the given variable must be array or slice
+func MustBeArray(array interface{}) {
+	values := reflect.ValueOf(array)
+	if values.Kind() != reflect.Array && values.Kind() != reflect.Slice {
+		exception.New("the variable type is not Array or Slice", 500).
+			Ctx(t.M{"array": array, "kind": values.Kind()}).
+			Throw()
+	}
 }
