@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/yaoapp/yao/lib/database"
-	"github.com/yaoapp/yao/lib/model/engine"
+	orm "github.com/yaoapp/yao/lib/model/engine/gorm"
 	"github.com/yaoapp/yao/lib/yms"
 	"gorm.io/gorm"
 )
@@ -31,8 +31,8 @@ func NewWithDB(db *gorm.DB, name string) Model {
 	filename := YMSFile(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
-	case "orm":
-		var m Model = &engine.ORM{DB: db, File: file}
+	case "gorm":
+		var m Model = &orm.Engine{DB: db, File: file}
 		return m
 	}
 	return nil
@@ -43,8 +43,8 @@ func NewSchemaWithDB(db *gorm.DB, name string) Schema {
 	filename := YMSFile(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
-	case "orm":
-		var schema Schema = &engine.ORM{DB: db, File: file}
+	case "gorm":
+		var schema Schema = &orm.Engine{DB: db, File: file}
 		return schema
 	}
 	return nil

@@ -14,7 +14,7 @@ type Model interface {
 	Exists()
 	Import()
 	Export()
-	ORM() *gorm.DB
+	GORM() *gorm.DB
 }
 
 // Schema the model schema methods
@@ -28,5 +28,5 @@ type Schema interface {
 	UpsertRelation()
 	DeleteRelation()
 	Upgrade()
-	ORM() *gorm.DB
+	GORM() *gorm.DB
 }

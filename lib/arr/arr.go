@@ -68,6 +68,20 @@ func Have(array interface{}, item interface{}) bool {
 	return false
 }
 
+// HaveAny Check each element exists in a array/slice
+func HaveAny(array interface{}, items interface{}) bool {
+	MustBeArray(items)
+	values := reflect.ValueOf(items)
+	length := values.Len()
+	for i := 0; i < length; i++ {
+		item := values.Index(i)
+		if Have(array, item.Interface()) {
+			return true
+		}
+	}
+	return false
+}
+
 // HaveMany Check each element exists in a array/slice
 func HaveMany(array interface{}, items interface{}) bool {
 	MustBeArray(items)

@@ -4,10 +4,12 @@ package yms
 type Field struct {
 	Comment  string      `json:"comment,omitempty"`
 	Name     string      `json:"name"`
-	Type     string      `json:"string"`
+	Type     string      `json:"type"`
 	Args     interface{} `json:"args,omitempty"`
+	Default  interface{} `json:"default,omitempty"`
 	Example  interface{} `json:"example,omitempty"`
 	Nullable *bool       `json:"nullable,omitempty"`
+	Unsigned *bool       `json:"unsigned,omitempty"`
 	Generate string      `json:"generate,omitempty"` // Increment, UUID,...
 	Encoder  string      `json:"encoder,omitempty"`  // AES-256, AES-128, PASSWORD-HASH, ...
 	Decoder  string      `json:"decoder,omitempty"`  // AES-256, AES-128, ...

@@ -1,7 +1,7 @@
 {
   "name": "成员",
   "dsn": "default",
-  "engine": "orm",
+  "engine": "gorm",
   "table": {
     "comment": "成员",
     "name": "user",
@@ -76,6 +76,33 @@
         "type": "string",
         "pattern": "^[A-Z0-9a-z]{8}$"
       }
+    },
+    {
+      "comment": "长整型",
+      "name": "bigInteger",
+      "type": "bigInteger",
+      "args": 20
+    },
+    { "comment": "字符型", "name": "char", "type": "char", "args": 21 },
+    { "comment": "字符串型", "name": "string", "type": "string", "args": 22 },
+    {
+      "comment": "小数型",
+      "name": "decimal",
+      "type": "decimal",
+      "args": [8, 2]
+    },
+    {
+      "comment": "双精度型",
+      "name": "double",
+      "type": "double",
+      "args": [16, 8]
+    },
+    { "comment": "浮点型", "name": "float", "type": "float", "args": [8, 4] },
+    {
+      "comment": "无符号小数",
+      "name": "unsignedDecimal",
+      "type": "unsignedDecimal",
+      "args": [8, 2]
     }
   ],
   "search": [

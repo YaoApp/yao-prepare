@@ -15,7 +15,7 @@ func init() {
 }
 
 func TestUpgrade(t *testing.T) {
-	defer exception.CatchPrint()
+	defer exception.CatchDebug()
 	schema := NewSchema("User")
 	schema.Upgrade()
 }

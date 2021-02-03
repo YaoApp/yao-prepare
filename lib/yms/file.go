@@ -5,6 +5,13 @@ import (
 	"github.com/yaoapp/yao/lib/t"
 )
 
+// EachField walk each EachField
+func (file *File) EachField(cb func(field *Field)) {
+	for i := range file.Fields {
+		cb(&file.Fields[i])
+	}
+}
+
 // parse file
 func (file *File) parse() {
 	if file.parsed {

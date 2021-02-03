@@ -3,6 +3,7 @@ package exception
 import (
 	"encoding/json"
 	"fmt"
+	"runtime/debug"
 
 	"github.com/TylerBrock/colorjson"
 	"github.com/fatih/color"
@@ -48,6 +49,28 @@ func CatchPrint() {
 		default:
 			color.Red("%#v\n", r)
 		}
+	}
+}
+
+// CatchDebug Catch the exception and print debug info
+func CatchDebug() {
+	if r := recover(); r != nil {
+		switch r.(type) {
+		case *Exception:
+			color.Red(r.(*Exception).Message)
+			r.(*Exception).Print()
+			break
+		case string:
+			color.Red(r.(string))
+			break
+		case error:
+			color.Red(r.(error).Error())
+			break
+		default:
+			color.Red("%#v\n", r)
+		}
+
+		fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
 	}
 }
 
