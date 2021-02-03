@@ -11,7 +11,9 @@ func (table *Table) Schema() {
 }
 
 // createTableSQL
-func (table *Table) createTableSQL() {
+func (table *Table) createTable() {
+	// migrator := table.DB.Migrator()
+	// migrator.CreateTable()
 }
 
 // parseColumns parse fields to columns

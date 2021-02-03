@@ -40,6 +40,7 @@ func (m *Engine) Table() *Table {
 	table := &Table{
 		Table:  m.File.Table,
 		Fields: m.File.Fields,
+		DB:     m.DB,
 	}
 	table.parseColumns()
 	return table
