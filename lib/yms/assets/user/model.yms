@@ -1,7 +1,7 @@
 {
   "name": "成员",
   "dsn": "default",
-  "engine": "gorm",
+  "engine": "database",
   "table": {
     "comment": "成员",
     "name": "user",

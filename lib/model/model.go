@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/yaoapp/yao/lib/database"
-	orm "github.com/yaoapp/yao/lib/model/engine/gorm"
+	"github.com/yaoapp/yao/lib/model/engine/db"
 	"github.com/yaoapp/yao/lib/yms"
 	"gorm.io/gorm"
 )
@@ -27,30 +27,30 @@ func NewSchema(name string) Schema {
 }
 
 // NewWithDB Create a model instance and bind connection .
-func NewWithDB(db *gorm.DB, name string) Model {
-	filename := YMSFile(name)
+func NewWithDB(gormDB *gorm.DB, name string) Model {
+	filename := YMSFilePath(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
-	case "gorm":
-		var m Model = &orm.Engine{DB: db, File: file}
+	case "db", "orm", "database", "gorm":
+		var m Model = &db.Engine{DB: gormDB, File: file}
 		return m
 	}
 	return nil
 }
 
 // NewSchemaWithDB Create a model instance and bind connection .
-func NewSchemaWithDB(db *gorm.DB, name string) Schema {
-	filename := YMSFile(name)
+func NewSchemaWithDB(gormDB *gorm.DB, name string) Schema {
+	filename := YMSFilePath(name)
 	file := yms.Get("system", filename)
 	switch file.Engine {
-	case "gorm":
-		var schema Schema = &orm.Engine{DB: db, File: file}
+	case "db", "orm", "database", "gorm":
+		var schema Schema = &db.Engine{DB: gormDB, File: file}
 		return schema
 	}
 	return nil
 }
 
-// YMSFile Get the YMS file path
-func YMSFile(name string) string {
+// YMSFilePath Get the YMS file path
+func YMSFilePath(name string) string {
 	return strings.ToLower(filepath.Join("/", name, "model.yms"))
 }

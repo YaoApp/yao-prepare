@@ -1,6 +1,6 @@
 {
   "name": "导购",
-  "engine": "gorm",
+  "engine": "database",
   "table": {
     "comment": "导购",
     "name": "guider",

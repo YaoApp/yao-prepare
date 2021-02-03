@@ -1,4 +1,4 @@
-package gorm
+package db
 
 import (
 	"github.com/yaoapp/yao/lib/json"
@@ -8,6 +8,10 @@ import (
 // Schema get the databae table schema
 func (table *Table) Schema() {
 	json.PrettyPrint(table.Columns)
+}
+
+// createTableSQL
+func (table *Table) createTableSQL() {
 }
 
 // parseColumns parse fields to columns

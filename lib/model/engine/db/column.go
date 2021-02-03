@@ -1,4 +1,4 @@
-package gorm
+package db
 
 import (
 	"github.com/yaoapp/yao/lib/arr"
